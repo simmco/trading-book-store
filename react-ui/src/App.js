@@ -50,6 +50,7 @@ class App extends Component {
             ? 'Fetching message from API'
             : this.state.message}
         </p>
+        <p>AND THE BUILD PROCESS IS SO EASY!</p>
       </div>
     );
   }
