@@ -3,7 +3,7 @@ import axios from 'axios'
 import styled from 'styled-components'
 
 import BookOverview from '../components/BookOverview'
-import TradingInfo from '../components/TradingInfo'
+import InfoField from '../components/InfoField'
 
 export default class AllBooksContainer extends React.Component {
     state = {
@@ -31,7 +31,7 @@ export default class AllBooksContainer extends React.Component {
                 </Books>
                 {this.state.trades && 
                 <Info>
-                    <TradingInfo />
+                    <InfoField />
                 </Info> }
             </Wrapper>
         )

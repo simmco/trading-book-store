@@ -1,31 +1,48 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  Redirect
 } from 'react-router-dom'
 import styled from 'styled-components'
 
 
 import AllBooks from './containers/AllBooksContainer'
+import MyBooks from './containers/MyBooksContainer'
+import Signup from './components/Signup'
+import Signin from './components/Signin'
 
-const BasicExample = () => (
+const token = localStorage.getItem('token');
+
+
+
+const BasicExample = (props) => (
   <Router>
     <App>
       <Nav>
         <Title>The Book Trading App</Title>
-        <Navbar>
-          <Li><StyledLink to="/">Home</StyledLink></Li>
+        {!token && <Navbar>
+          <Li><StyledLink to="/allbooks">All Books</StyledLink></Li>
+          <Li><StyledLink to="/signup">Sign up</StyledLink></Li>
+          <Li><StyledLink to="/signin">Sign in</StyledLink></Li>
+        </Navbar> }
+
+        {token && <Navbar>
           <Li><StyledLink to="/allbooks">All Books</StyledLink></Li>
           <Li><StyledLink to="/mybooks">My Books</StyledLink></Li>
-          <Li><StyledLink to="/login">Log In</StyledLink></Li>
-        </Navbar>
+          <Li><StyledLink to="/signout">Log out</StyledLink></Li>
+        </Navbar> }
 
       </Nav>
 
       {/*<Route exact path="/" component={Home}/>*/}
       <Route path="/allbooks" component={AllBooks}/>
-      {/*<Route path="/mybooks" component={MyBooks}/>*/}
+      <Route path="/mybooks" component={MyBooks}/>
+      <Route path="/signup" component={Signup}/>
+      <Route path="/signin" component={Signin}/>
+      <Route path="/signout" render={() => <div> <h1>Logged out!</h1> {localStorage.removeItem('token')}</div> } />
+
     </App>
   </Router>
 )
@@ -38,6 +55,7 @@ const App = styled.nav`
   margin: 0;
   padding: 0 10px;
   font-family: Helvetica, Arial, sans-serif;
+  min-height: 100vh;
 `
 
 const Nav = styled.nav`

@@ -4,11 +4,12 @@ import styled from 'styled-components'
 export default function BookDetail(props) {
     return <div>
         <Wrapper>
-            <Image />
+            <Image style={{ 'backgroundImage': 'url('+ props.pic + ')'}}>
+            </Image>
             <Bottom>
                 <Book>
-                    {props.name}
-                    <span>Author</span>
+                    {props.title}<br/>
+                    {props.authors}
                 </Book>
                <Icon>Icon</Icon>
             </Bottom>
@@ -18,15 +19,19 @@ export default function BookDetail(props) {
 
 
 const Wrapper = styled.div`
-  width: 250px;
-  height: 300px;
+  width: 180px;
+  height: 340px;
   margin: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid black;
+  font-size: 0.9rem;
+background-color: white;
 `
 
 const Image = styled.div`
   background-color: palevioletred;
-  height: 85%;
+  background-size: contain;
+  height: 80%;
+  border-bottom: 1px solid black;
 `
 
 const Bottom = styled.div`

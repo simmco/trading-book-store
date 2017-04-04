@@ -28,11 +28,13 @@ bookController.getAll = (req, res) => {
 
 bookController.addBook = (req, res) => {
 
-    const { name } = req.body
+    const { title, authors, pic } = req.body
     const { userId } = req.params
 
     const book = new db.Book({
-        name,
+        title,
+        authors,
+        pic,
         _owner: userId
     })
 

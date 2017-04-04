@@ -3,7 +3,7 @@ import axios from 'axios'
 import styled from 'styled-components'
 
 import BookOverview from '../components/BookOverview'
-import TradingInfo from '../components/TradingInfo'
+import InfoField from '../components/InfoField'
 
 export default class MyBooksContainer extends React.Component {
     state = {
@@ -11,10 +11,11 @@ export default class MyBooksContainer extends React.Component {
         error : ''
     }
     componentDidMount = () => {
-        axios.get('/api/books')
+        const id = localStorage.getItem('id')
+        axios.get(`/api/user/${id}`)
             .then(response => {
                 this.setState({
-                    books: response.data.books
+                    books: response.data.user.books
                 })
             })
             .catch(error => {
@@ -23,15 +24,16 @@ export default class MyBooksContainer extends React.Component {
                 })
             });
     }
+
     render() {
         return (
             <Wrapper>
                 <Books>
-                    <BookOverview books={this.state.books}/>
+                    <BookOverview books={this.state.books} />
                 </Books>
                 <Info>
-                    <TradingInfo />
-                </Info> }
+                    <InfoField  />
+                </Info> 
             </Wrapper>
         )
     }
