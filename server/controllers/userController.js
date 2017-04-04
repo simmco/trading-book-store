@@ -5,6 +5,7 @@ const db = require('../models')
 
 userController.get = (req, res) => {
   db.User.findById(req.params.id)
+    .populate('books')
     .then(user => {
         res.status(200).json({user})
     })

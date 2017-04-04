@@ -10,7 +10,8 @@ const userSchema = new Schema({
     password: String,
     city: String,
     state: String,
-    _books: [{ type: Schema.ObjectId, ref: 'Book'}]
+    books: [{ type: Schema.ObjectId, ref: 'Book'}],
+    requestedBooks: [{ type: Schema.ObjectId, ref: 'Book'}]
 })
 
 const User = mongoose.model('User', userSchema)

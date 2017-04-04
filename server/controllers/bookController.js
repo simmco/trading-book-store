@@ -1,4 +1,4 @@
-const bookController = {};
+const bookController = {}
 
 const db = require('../models')
 
@@ -29,19 +29,18 @@ bookController.getAll = (req, res) => {
 bookController.addBook = (req, res) => {
 
     const { name } = req.body
-    const { id } = req.params
+    const { userId } = req.params
 
     const book = new db.Book({
         name,
-        _owner: id
+        _owner: userId
     })
 
     book.save()
         .then(book => {
-            db.User.findById(id)
+            db.User.findById(userId)
                 .then(user => {
-                    user._books.push(book._id)
-
+                    user.books.push(book._id)
                     user.save().then(user => {
                         res.send({
                             user,
@@ -55,5 +54,6 @@ bookController.addBook = (req, res) => {
         })
 
 }
+
 
 module.exports = bookController

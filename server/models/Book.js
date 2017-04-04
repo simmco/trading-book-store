@@ -6,7 +6,8 @@ mongoose.Promise = global.Promise
 
 const bookSchema = new Schema({
     name: String,
-    _owner: { type: Schema.ObjectId, ref: 'User'}
+    _owner: { type: Schema.ObjectId, ref: 'User'},
+    _requestedBy: { type: Schema.ObjectId, ref: 'User'}
 })
 
 const Book = mongoose.model('Book', bookSchema)
