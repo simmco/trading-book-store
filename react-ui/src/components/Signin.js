@@ -1,16 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import { Redirect } from 'react-router'
+import { connect } from 'react-redux';
+import * as actions from '../actions'
 
 
-export default class Signup extends React.Component {
+class Signin extends React.Component {
     state = {
         email: '',
         password: '',
-        errors: {},
-        serverMessage: '',
-        login: false
+        errors: {}
     }
     handleChange = (e) => {
         this.setState({
@@ -23,26 +22,14 @@ export default class Signup extends React.Component {
         const errors = validate(this.state)
 
         if(Object.keys(errors).length === 0 && errors.constructor === Object) {
-            axios.post('/api/user/signin',{ email: this.state.email, password: this.state.password })
-             .then(res => {
-                localStorage.setItem('token', res.data.token)
-                localStorage.setItem('id', res.data.id)
-                this.setState({login: true})
-             }).catch(error => {
-                 const errorType = error.response.data.error
-                 this.setState({ serverMessage : errorType })
-             })
+            this.props.signinUser(this.state.email, this.state.password)
         } else {
             this.setState({ errors })
         }
 
     }
     render() {
-        const { errors, serverMessage, login } = this.state
-
-        if (login) {
-            return (<Redirect to="/mybooks" />)
-        }
+        const { errors } = this.state
 
         return(
             <Wrapper>
@@ -54,13 +41,15 @@ export default class Signup extends React.Component {
                     <Input onChange={this.handleChange} value={this.state.nameChild} type="password" name="password"/> <br/>
                     {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}<br/>
                     <Button type="submit">Sign in</Button>
-                </Form>
-                {serverMessage && <p>{serverMessage}</p>}
-            
+                </Form>            
             </Wrapper>
         )
     }
 }
+
+export default connect(null, actions)(Signin);
+
+
 
 const Wrapper = styled.div`
     margin: 0 auto;

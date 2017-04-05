@@ -1,15 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux';
+import * as actions from '../actions'
 
-
-export default class Signup extends React.Component {
+class Signup extends React.Component {
     state = {
         email: '',
         password: '',
-        errors: {},
-        serverMessage: ''
+        errors: {}
     }
     handleChange = (e) => {
         this.setState({
@@ -22,14 +21,7 @@ export default class Signup extends React.Component {
         const errors = validate(this.state)
 
         if(Object.keys(errors).length === 0 && errors.constructor === Object) {
-            axios.post('/api/user/signup',{ email: this.state.email, password: this.state.password })
-             .then(res => {
-                 localStorage.setItem('token', res.data.token)
-             }).catch(error => {
-                 console.log(error.response.data)
-                 const errorType = error.response.data.error
-                 this.setState({ serverMessage : errorType })
-             })
+            this.props.signupUser(this.state.email, this.state.password)
         } else {
             this.setState({ errors })
         }
@@ -37,7 +29,7 @@ export default class Signup extends React.Component {
     }
     render() {
         console.log(this.state)
-        const { errors, serverMessage } = this.state
+        const { errors } = this.state
         return(
             <Wrapper>
                 <Form onSubmit={this.submitForm}>
@@ -49,11 +41,13 @@ export default class Signup extends React.Component {
                     {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}<br/>
                     <Button type="submit">Sign up</Button>
                 </Form>
-                {serverMessage && <p>{serverMessage}</p>}
             </Wrapper>
         )
     }
 }
+
+export default connect(null, actions)(Signup);
+
 
 const Wrapper = styled.div`
     margin: 0 auto;

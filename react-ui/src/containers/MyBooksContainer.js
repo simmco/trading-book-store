@@ -1,35 +1,22 @@
 import React from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
+import { connect } from 'react-redux';
+import * as actions from '../actions'
 
 import BookOverview from '../components/BookOverview'
 import InfoField from '../components/InfoField'
 
-export default class MyBooksContainer extends React.Component {
-    state = {
-        books : [],
-        error : ''
-    }
+class MyBooksContainer extends React.Component {
     componentDidMount = () => {
-        const id = localStorage.getItem('id')
-        axios.get(`/api/user/${id}`)
-            .then(response => {
-                this.setState({
-                    books: response.data.user.books
-                })
-            })
-            .catch(error => {
-                this.setState({
-                    error
-                })
-            });
+      this.props.getMyBooks()
     }
 
     render() {
         return (
             <Wrapper>
                 <Books>
-                    <BookOverview books={this.state.books} />
+                    <BookOverview books={this.props.books} />
                 </Books>
                 <Info>
                     <InfoField  />
@@ -38,6 +25,12 @@ export default class MyBooksContainer extends React.Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+  return { books: state.myBooks };
+}
+
+export default connect(mapStateToProps, actions)(MyBooksContainer)
 
 const Wrapper = styled.div`
     display: flex;

@@ -1,42 +1,36 @@
 import React from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
+import { connect } from 'react-redux';
+import * as actions from '../actions'
 
 import BookOverview from '../components/BookOverview'
 import InfoField from '../components/InfoField'
 
-export default class AllBooksContainer extends React.Component {
-    state = {
-        books : [],
-        error : ''
-    }
+class AllBooksContainer extends React.Component {
     componentDidMount = () => {
-        axios.get('/api/books')
-            .then(response => {
-                this.setState({
-                    books: response.data.books
-                })
-            })
-            .catch(error => {
-                this.setState({
-                    error
-                })
-            });
+        this.props.getAllBooks()
     }
     render() {
         return (
             <Wrapper>
                 <Books>
-                    <BookOverview books={this.state.books}/>
+                    <BookOverview books={this.props.books}/>
                 </Books>
-                {this.state.trades && 
                 <Info>
                     <InfoField />
-                </Info> }
+                </Info> 
             </Wrapper>
         )
     }
 }
+
+function mapStateToProps(state) {
+  return { books: state.allBooks };
+}
+
+export default connect(mapStateToProps, actions)(AllBooksContainer)
+
 
 const Wrapper = styled.div`
     display: flex;

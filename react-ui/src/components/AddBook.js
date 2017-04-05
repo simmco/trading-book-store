@@ -1,11 +1,13 @@
 import React from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
+import { connect } from 'react-redux';
+import * as actions from '../actions'
 
 
 import BookSearchResults from './BookSearchResults'
 
-export default class AddBook extends React.Component {
+class AddBook extends React.Component {
     state = {
         title: '',
         author: '',
@@ -28,18 +30,8 @@ export default class AddBook extends React.Component {
         })
     }
     addBook = (title, authors, pic) => {
-        console.log(title)
-        console.log(authors)
-        console.log(pic)
         const id = localStorage.getItem('id')
-        console.log(id)
-        axios.post(`http://localhost:5000/api/user/${id}/addbook`, {title, authors, pic})
-            .then(res => {
-                console.log(res)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        this.props.addBook(id, title, authors, pic)
     }
     render() {
         return (
@@ -63,6 +55,8 @@ export default class AddBook extends React.Component {
         )
     }
 }
+
+export default connect(null, actions)(AddBook)
 
 const Input = styled.input`
     width: 200px;

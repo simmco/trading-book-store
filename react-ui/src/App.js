@@ -7,14 +7,13 @@ import {
 } from 'react-router-dom'
 import styled from 'styled-components'
 
-
+import Home from './components/Home'
 import AllBooks from './containers/AllBooksContainer'
 import MyBooks from './containers/MyBooksContainer'
 import Signup from './components/Signup'
 import Signin from './components/Signin'
 
-const token = localStorage.getItem('token');
-
+const token = localStorage.getItem('token')
 
 
 const BasicExample = (props) => (
@@ -36,7 +35,7 @@ const BasicExample = (props) => (
 
       </Nav>
 
-      {/*<Route exact path="/" component={Home}/>*/}
+      <Route exact path="/" component={Home}/>
       <Route path="/allbooks" component={AllBooks}/>
       <Route path="/mybooks" component={MyBooks}/>
       <Route path="/signup" component={Signup}/>
