@@ -1,21 +1,36 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+import * as actions from '../actions'
 
-export default function BookDetail(props) {
-    return <div>
-        <Wrapper>
-            <Image style={{ 'backgroundImage': 'url('+ props.pic + ')'}}>
-            </Image>
-            <Bottom>
-                <Book>
-                    {props.title}<br/>
-                    {props.authors}
-                </Book>
-               <Icon>Icon</Icon>
-            </Bottom>
-        </Wrapper>
-    </div>
+class BookDetail extends React.Component {
+    tradeRequest = () => {
+        console.log(this.props._id)
+        this.props.requestBook(this.props._id)
+    }
+    render() {
+        const isOwner = this.props._owner === localStorage.getItem('id') ? true : false
+        console.log(isOwner)
+    return (
+        <div>
+            <Wrapper>
+                <Image style={{ 'backgroundImage': 'url('+ this.props.pic + ')'}}>
+                </Image>
+                <Bottom>
+                    <Book>
+                        {this.props.title}<br/>
+                        {this.props.authors}
+                    </Book>
+                {!isOwner && <Button onClick={this.tradeRequest}>Trade</Button> }
+                </Bottom>
+            </Wrapper>
+        </div>
+    )
+
+    }
 }
+
+export default connect(null, actions)(BookDetail)
 
 
 const Wrapper = styled.div`
@@ -46,6 +61,12 @@ const Book = styled.div`
     padding-left: 1rem;
 `
 
-const Icon = styled.p`
-    padding-right: 0.4rem;
+const Button = styled.button`
+    border: 1px solid black;
+    border-radius: 4px;
+    width: 35px;
+    height: 35px;
+    background-color: palevioletred;
+    text-align: center;
+    cursor: pointer;
 `

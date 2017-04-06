@@ -1,7 +1,8 @@
 import axios from 'axios'
-import { ADD_BOOK, AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_MESSAGE, GET_ALL_BOOKS, GET_MY_BOOKS } from './types'
+import { ADD_BOOK, AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_MESSAGE, GET_ALL_BOOKS, GET_MY_BOOKS, GET_REQ_BOOKS } from './types'
 
-const ROOT_URL = 'https://lit-brook-10809.herokuapp.com/api'
+// const ROOT_URL = 'https://lit-brook-10809.herokuapp.com/api'
+const ROOT_URL = 'http://localhost:5000/api'
 
 export function signinUser(email, password) {
   return function(dispatch) {
@@ -93,4 +94,37 @@ export function addBook(id, title, authors, pic) {
             console.log(err)
         })
    }
+}
+
+//get books which are requested by other users
+export function requestedBooks(){
+  const id = localStorage.getItem('id')
+  return function(dispatch){
+    axios.get(`${ROOT_URL}/user/${id}`)
+            .then(res => {
+              console.log('action:')
+              console.log(res)
+                dispatch({ 
+                    type: GET_REQ_BOOKS,
+                    payload: res.data.user.requestedBooks
+                })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+  }
+}
+
+
+export function requestBook(bookId) {
+  const userId = localStorage.getItem('id')
+  return function(dispatch){
+    axios.patch(`${ROOT_URL}/book/${bookId}/request`,{ userId })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 }

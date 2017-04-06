@@ -1,4 +1,5 @@
 import React from 'react'
+import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
 import { connect } from 'react-redux';
@@ -31,6 +32,10 @@ class Signin extends React.Component {
     render() {
         const { errors } = this.state
 
+        if(this.props.authenticated) {
+            return <Redirect to="/mybooks" />
+        }
+
         return(
             <Wrapper>
                 <Form onSubmit={this.submitForm}>
@@ -47,7 +52,12 @@ class Signin extends React.Component {
     }
 }
 
-export default connect(null, actions)(Signin);
+
+function mapStateToProps(state) {
+  return { authenticated: state.auth.authenticated };
+}
+
+export default connect(mapStateToProps, actions)(Signin);
 
 
 

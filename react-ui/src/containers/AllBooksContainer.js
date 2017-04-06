@@ -10,6 +10,7 @@ import InfoField from '../components/InfoField'
 class AllBooksContainer extends React.Component {
     componentDidMount = () => {
         this.props.getAllBooks()
+        
     }
     render() {
         return (
@@ -17,16 +18,19 @@ class AllBooksContainer extends React.Component {
                 <Books>
                     <BookOverview books={this.props.books}/>
                 </Books>
-                <Info>
+                {this.props.authenticated && <Info>
                     <InfoField />
-                </Info> 
+                </Info> }
             </Wrapper>
         )
     }
 }
 
 function mapStateToProps(state) {
-  return { books: state.allBooks };
+  return { 
+           books: state.allBooks,
+           authenticated: state.auth.authenticated 
+        };
 }
 
 export default connect(mapStateToProps, actions)(AllBooksContainer)

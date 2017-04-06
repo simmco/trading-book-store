@@ -12,7 +12,12 @@ const userSchema = new Schema({
     city: String,
     state: String,
     books: [{ type: Schema.ObjectId, ref: 'Book'}],
-    requestedBooks: [{ type: Schema.ObjectId, ref: 'Book'}]
+    requestedBooks: [{
+      title : String,
+      authors : [String],
+      _bookId : { type: Schema.ObjectId, ref: 'Book'}
+     }]
+
 })
 
 userSchema.pre('save', function(next) {

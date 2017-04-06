@@ -13,7 +13,9 @@ tradeController.reqbook = (req, res) => {
         .then(book => {
             db.User.findById(userId)
             .then(user => {
-                user.requestedBooks.push(bookId)
+                console.log(book)
+                user.requestedBooks.push({title: book.title, authors: book.authors, _bookId: book._id })
+                console.log(user)
                 user.save()
                     .then(user => {
                         res.json({

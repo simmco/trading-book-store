@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import { connect } from 'react-redux';
 import * as actions from '../actions'
@@ -28,7 +29,10 @@ class Signup extends React.Component {
 
     }
     render() {
-        console.log(this.state)
+       if(this.props.authenticated) {
+            return <Redirect to="/allbooks" />
+        }
+
         const { errors } = this.state
         return(
             <Wrapper>
@@ -46,7 +50,11 @@ class Signup extends React.Component {
     }
 }
 
-export default connect(null, actions)(Signup);
+function mapStateToProps(state) {
+  return { authenticated: state.auth.authenticated };
+}
+
+export default connect(mapStateToProps, actions)(Signup);
 
 
 const Wrapper = styled.div`

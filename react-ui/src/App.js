@@ -1,9 +1,10 @@
-import React from 'react';
+import React from 'react'
 import {
   BrowserRouter as Router,
   Route,
   Link,
-  Redirect
+  Redirect,
+  withRouter
 } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -12,6 +13,7 @@ import AllBooks from './containers/AllBooksContainer'
 import MyBooks from './containers/MyBooksContainer'
 import Signup from './components/Signup'
 import Signin from './components/Signin'
+import HeaderMenu from './components/HeaderMenu'
 
 const token = localStorage.getItem('token')
 
@@ -21,17 +23,7 @@ const BasicExample = (props) => (
     <App>
       <Nav>
         <Title>The Book Trading App</Title>
-        {!token && <Navbar>
-          <Li><StyledLink to="/allbooks">All Books</StyledLink></Li>
-          <Li><StyledLink to="/signup">Sign up</StyledLink></Li>
-          <Li><StyledLink to="/signin">Sign in</StyledLink></Li>
-        </Navbar> }
-
-        {token && <Navbar>
-          <Li><StyledLink to="/allbooks">All Books</StyledLink></Li>
-          <Li><StyledLink to="/mybooks">My Books</StyledLink></Li>
-          <Li><StyledLink to="/signout">Log out</StyledLink></Li>
-        </Navbar> }
+        <HeaderMenu />
 
       </Nav>
 
@@ -71,26 +63,3 @@ const Title = styled.p`
   font-weight: bold;
 `
 
-const Navbar = styled.ul`
-  list-style-type: none;
-  text-align: right;
-
-  @media (max-width: 800px) {
-    display: none;
-  }
-`
-
-const Li = styled.li`
-  display: inline-block;
-  padding-right: 2rem;
-`
-
-const StyledLink = styled(Link)`
-  color: palevioletred;
-  margin: 0.5em 0;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;

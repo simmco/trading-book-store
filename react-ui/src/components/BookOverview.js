@@ -17,5 +17,5 @@ export default function BookOverview (props) {
 const Wrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
 `
