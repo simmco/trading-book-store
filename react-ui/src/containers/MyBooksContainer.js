@@ -16,6 +16,7 @@ class MyBooksContainer extends React.Component {
         return (
             <Wrapper>
                 <Books>
+                    <h2>My Books:</h2>
                     <BookOverview books={this.props.books} />
                 </Books>
                 <Info>
@@ -34,6 +35,7 @@ export default connect(mapStateToProps, actions)(MyBooksContainer)
 
 const Wrapper = styled.div`
     display: flex;
+    flex-wrap: wrap-reverse;
 `
 
 const Books = styled.div`
@@ -44,4 +46,9 @@ const Info = styled.div`
     flex: 1;
     border-left: 1px solid #ccc;
     padding: 0.5rem;
+
+    @media (max-width: 475px) {
+        border-left: none;
+        border-bottom: 1px solid #ccc;
+    }
 `

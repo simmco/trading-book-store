@@ -25,9 +25,12 @@ routes.get('/user/:id', userController.get)
 routes.post('/user/signup', userController.signup)
 routes.post('/user/signin', requireSignin, userController.signin)
 
-routes.post('/user/:userId/addbook', bookController.addBook)
+routes.patch('/user/:userId/updateinfo', userController.updateinfo)
+
+routes.post('/user/:userId/addbook', requireAuth, bookController.addBook)
 
 //trade
 routes.patch('/book/:bookId/request', tradeController.reqbook)
+routes.patch('/book/:bookId/cancelreq', tradeController.cancelReq)
 
 module.exports = routes

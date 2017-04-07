@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ADD_BOOK, AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_MESSAGE, GET_ALL_BOOKS, GET_MY_BOOKS, GET_REQ_BOOKS } from './types'
+import { ADD_BOOK, AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_MESSAGE, GET_ALL_BOOKS, GET_MY_BOOKS, GET_REQ_BOOKS, DELETE_REQ } from './types'
 
 // const ROOT_URL = 'https://lit-brook-10809.herokuapp.com/api'
 const ROOT_URL = 'http://localhost:5000/api'
@@ -83,7 +83,10 @@ export function getMyBooks() {
 export function addBook(id, title, authors, pic) {
    
    return function(dispatch){
-      axios.post(`${ROOT_URL}/user/${id}/addbook`, {title, authors, pic})
+      axios.post(`${ROOT_URL}/user/${id}/addbook`, {title, authors, pic}, 
+      {
+      headers: { authorization: localStorage.getItem('token') }
+      })
         .then(res => {
             dispatch({ 
               type: ADD_BOOK,
@@ -120,6 +123,36 @@ export function requestBook(bookId) {
   const userId = localStorage.getItem('id')
   return function(dispatch){
     axios.patch(`${ROOT_URL}/book/${bookId}/request`,{ userId })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+}
+
+export function cancelReq (bookId, requestId) {
+  return function(dispatch){
+    axios.patch(`${ROOT_URL}/book/${bookId}/cancelreq`, { userId: requestId })
+      .then(res => {
+        console.log(res.data[0]._bookId)
+        dispatch({
+          type: DELETE_REQ,
+          payload: bookId
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+}
+
+
+export function updateProfileInfo(city, state) {
+  const userId = localStorage.getItem('id')
+  return function(dispatch){
+    axios.patch(`${ROOT_URL}/user/${userId}/updateinfo`,{ city, state })
       .then(res => {
         console.log(res)
       })

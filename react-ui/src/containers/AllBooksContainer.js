@@ -18,9 +18,6 @@ class AllBooksContainer extends React.Component {
                 <Books>
                     <BookOverview books={this.props.books}/>
                 </Books>
-                {this.props.authenticated && <Info>
-                    <InfoField />
-                </Info> }
             </Wrapper>
         )
     }

@@ -14,6 +14,7 @@ import MyBooks from './containers/MyBooksContainer'
 import Signup from './components/Signup'
 import Signin from './components/Signin'
 import HeaderMenu from './components/HeaderMenu'
+import MyProfile from './components/MyProfile'
 
 const token = localStorage.getItem('token')
 
@@ -32,7 +33,8 @@ const BasicExample = (props) => (
       <Route path="/mybooks" component={MyBooks}/>
       <Route path="/signup" component={Signup}/>
       <Route path="/signin" component={Signin}/>
-      <Route path="/signout" render={() => <div> <h1>Logged out!</h1> {localStorage.removeItem('token')}</div> } />
+      <Route path="/myprofile" component={MyProfile}/>
+      <Route path="/signout" render={() => <div> <h2>Logged out! Hope you had some nice trades!</h2> {localStorage.removeItem('token')}</div> } />
 
     </App>
   </Router>

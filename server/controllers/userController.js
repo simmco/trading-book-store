@@ -62,4 +62,23 @@ userController.signup = (req, res) => {
                 })
 }
 
+userController.updateinfo = (req, res) => {
+    const { city, state } = req.body
+    const { userId } = req.params
+
+    db.User.findById(userId)
+        .then(user => {
+          city && (user.city = city)
+          state && (user.state = state)
+
+          user.save()
+            .then(user => {
+                res.json({user})
+            })
+            .catch(err => {
+                res.json({err})
+            })
+        })
+}
+
 module.exports = userController

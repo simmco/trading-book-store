@@ -13,6 +13,7 @@ class HeaderMenu extends React.Component {
                     <Navbar>
                         <Li><StyledLink to="/allbooks">All Books</StyledLink></Li>
                         <Li><StyledLink to="/mybooks">My Books</StyledLink></Li>
+                        <Li><StyledLink to="/myprofile">My Profile</StyledLink></Li>
                         <Li><StyledLink to="/signout" onClick={() => {this.props.signoutUser()}}>Sign out</StyledLink></Li>
                     </Navbar> 
                    

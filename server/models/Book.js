@@ -9,7 +9,8 @@ const bookSchema = new Schema({
     authors: [String],
     pic: String,
     _owner: { type: Schema.ObjectId, ref: 'User'},
-    _requestedBy: { type: Schema.ObjectId, ref: 'User'}
+    _requestedBy: { type: Schema.ObjectId, ref: 'User'},
+    reqAccepted: { type: Boolean, default: false }
 })
 
 const Book = mongoose.model('Book', bookSchema)
