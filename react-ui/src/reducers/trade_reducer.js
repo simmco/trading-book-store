@@ -1,7 +1,6 @@
 import { GET_REQ_BOOKS, DELETE_REQ } from '../actions/types'
 
 export default function getAllBooksReducer(state = {}, action) {
-    console.log(state)
     switch(action.type) {
         case GET_REQ_BOOKS:
             return {

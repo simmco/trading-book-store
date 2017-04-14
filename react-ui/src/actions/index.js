@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ADD_BOOK, AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_MESSAGE, GET_ALL_BOOKS, GET_MY_BOOKS, GET_REQ_BOOKS, DELETE_REQ } from './types'
+import { ADD_BOOK, AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_MESSAGE, GET_ALL_BOOKS, GET_MY_BOOKS, GET_REQ_BOOKS, DELETE_REQ, REJECT_REQ, DELETE_BOOK, GET_TRADE_INFO, GET_USER } from './types'
 
 // const ROOT_URL = 'https://lit-brook-10809.herokuapp.com/api'
 const ROOT_URL = 'http://localhost:5000/api'
@@ -99,6 +99,21 @@ export function addBook(id, title, authors, pic) {
    }
 }
 
+export function deleteBook(bookId) {
+   return function(dispatch) {
+    axios.delete(`${ROOT_URL}/book/${bookId}/remove`)
+      .then(res => {
+        dispatch({ 
+                    type: DELETE_BOOK,
+                    payload: res.data.book._id
+                })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+}
+
 //get books which are requested by other users
 export function requestedBooks(){
   const id = localStorage.getItem('id')
@@ -136,7 +151,6 @@ export function cancelReq (bookId, requestId) {
   return function(dispatch){
     axios.patch(`${ROOT_URL}/book/${bookId}/cancelreq`, { userId: requestId })
       .then(res => {
-        console.log(res.data[0]._bookId)
         dispatch({
           type: DELETE_REQ,
           payload: bookId
@@ -148,6 +162,53 @@ export function cancelReq (bookId, requestId) {
   }
 }
 
+export function rejectReq (bookId, requestId) {
+  return function(dispatch){
+    axios.patch(`${ROOT_URL}/book/${bookId}/cancelreq`, { userId: requestId })
+      .then(res => {
+        dispatch({
+          type: REJECT_REQ,
+          payload: bookId
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+}
+
+export function getTradePartner(bookId) {
+  return function(dispatch) {
+    axios.get(`${ROOT_URL}/book/${bookId}/tradeinfo`)
+      .then(res => {
+        dispatch({
+          type: GET_TRADE_INFO,
+          payload: res.data
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+}
+
+
+
+export function getProfileInfo() {
+  const userId = localStorage.getItem('id')
+  return function(dispatch) {
+    axios.get(`${ROOT_URL}/user/${userId}`)
+      .then(res => {
+         dispatch({
+          type: GET_USER,
+          payload: res.data.user
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+}
 
 export function updateProfileInfo(city, state) {
   const userId = localStorage.getItem('id')

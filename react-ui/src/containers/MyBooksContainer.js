@@ -45,7 +45,7 @@ const Books = styled.div`
 const Info = styled.div`
     flex: 1;
     border-left: 1px solid #ccc;
-    padding: 0.5rem;
+    padding: 1rem;
 
     @media (max-width: 475px) {
         border-left: none;

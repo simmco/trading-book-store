@@ -13,12 +13,16 @@ class BookDetail extends React.Component {
             isRequested: true
         })
     }
+    deleteBook = () => {
+        this.props.deleteBook(this.props._id)
+    }
     render() {
         const isOwner = this.props._owner === localStorage.getItem('id') ? true : false
     return (
         <div>
             <Wrapper>
                 <Image style={{ 'backgroundImage': 'url('+ this.props.pic + ')'}}>
+                    {isOwner && <Delete onClick={this.deleteBook}>X</Delete>}
                 </Image>
                 <Bottom>
                     <Book>
@@ -56,7 +60,7 @@ const Image = styled.div`
   margin: 0 auto;
   border: 1px solid #ccc;
   box-shadow: 1px 1px 1px #ccc;
-  padding: 0.5rem;
+  padding: 0.1rem;
 `
 
 const Bottom = styled.div`
@@ -84,11 +88,28 @@ const BookAuthor = styled.p`
 
 const Button = styled.button`
     margin: 0.5rem; 
-    border: 1px solid black;
+    border: 1px solid palevioletred;
     border-radius: 4px;
     width: 45px;
     height: 35px;
     background-color: palevioletred;
     text-align: center;
     cursor: pointer;
+    color: white
+`
+
+const Delete = styled.button`
+    border: 1px solid #FFCDD2;
+    border-radius: 4px;
+    width: 22px;
+    height: 20px;
+    background-color: #FFCDD2;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    float: right;
+
+    &:hover {
+        background-color: #F44336;
+    }
 `

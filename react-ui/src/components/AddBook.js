@@ -32,6 +32,9 @@ class AddBook extends React.Component {
     addBook = (title, authors, pic) => {
         const id = localStorage.getItem('id')
         this.props.addBook(id, title, authors, pic)
+        this.setState({
+            books: []
+        })
     }
     render() {
         return (

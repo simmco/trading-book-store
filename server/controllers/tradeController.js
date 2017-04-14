@@ -30,13 +30,31 @@ tradeController.reqbook = (req, res) => {
     .catch(err => res.json({err}))
 }
 
+
+tradeController.tradeInfo = (req, res) => {
+     const { bookId } = req.params
+
+     db.Book.findById(bookId)
+        .then(book => {
+            db.User.findById(book._requestedBy)
+                .then( user => {
+                    res.json({
+                        book,
+                        user
+                    })
+                })
+        })
+        .catch(err => {
+            res.json({ err })
+        })
+}
+
 tradeController.cancelReq = (req, res) => {
     const { bookId } = req.params
     const { userId } = req.body
 
     db.Book.findById(bookId)
         .then(book => {
-            console.log(book)
             book._requestedBy = undefined
             book.save()
             .then(book => {
@@ -50,6 +68,7 @@ tradeController.cancelReq = (req, res) => {
             })
         })
 }
+
 
 tradeController.acceptReq = (req, res) => {
     

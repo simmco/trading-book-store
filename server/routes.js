@@ -19,6 +19,7 @@ routes.get('/', basicController.get)
 
 routes.get('/book/:id', bookController.get)
 routes.get('/books', bookController.getAll)
+routes.delete('/book/:bookId/remove', bookController.delete)
 
 routes.get('/user/:id', userController.get)
 
@@ -30,6 +31,7 @@ routes.patch('/user/:userId/updateinfo', userController.updateinfo)
 routes.post('/user/:userId/addbook', requireAuth, bookController.addBook)
 
 //trade
+routes.get('/book/:bookId/tradeinfo', tradeController.tradeInfo)
 routes.patch('/book/:bookId/request', tradeController.reqbook)
 routes.patch('/book/:bookId/cancelreq', tradeController.cancelReq)
 

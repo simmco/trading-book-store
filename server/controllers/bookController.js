@@ -41,15 +41,15 @@ bookController.addBook = (req, res) => {
     book.save()
         .then(book => {
             db.User.findById(userId)
-                .then(user => {
-                    user.books.push(book._id)
-                    user.save().then(user => {
-                        res.send({
-                            user,
-                            book
-                        })
+            .then(user => {
+                user.books.push(book._id)
+                user.save().then(user => {
+                    res.send({
+                        user,
+                        book
                     })
                 })
+            })
         })
         .catch(err => {
             res.send({err})
@@ -57,5 +57,16 @@ bookController.addBook = (req, res) => {
 
 }
 
+bookController.delete = (req, res) => {
+    const { bookId } = req.params
+    console.log(bookId)
+    db.Book.findByIdAndRemove(bookId)
+    .then( book => {
+        res.json({ book })
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
 
 module.exports = bookController

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
@@ -8,25 +9,26 @@ class TradeStatus extends React.Component{
         this.props.requestedBooks()
     }
     declineReq = (bookId, requestId) => {
-        console.log('here decline in TradeStatus: ')
-        console.log(bookId)
         const placeholder = requestId || localStorage.getItem('id')
         this.props.cancelReq(bookId, placeholder)
     }
+    rejectReq = (bookId, requestId) => {
+        this.props.rejectReq(bookId, requestId)
+    }
     render() {
-        console.log(this.props.trade)
+        console.log(this.props.books)
         return (
         <div>
             <h2>Trade request you made</h2>
                 {this.props.trade.requestedBooks && this.props.trade.requestedBooks.map(trade => {
-                    return <div>
-                        { trade && <Trade key={trade._id}><TradeInfo>{trade.title} - {trade.authors}</TradeInfo><TradeDecline onClick={() => this.declineReq(trade._bookId)}> X</TradeDecline> </Trade>}
+                    return trade && <div key={trade._id}>
+                        <Trade><TradeInfo>{trade.title} - {trade.authors}</TradeInfo><TradeDecline onClick={() => this.declineReq(trade._bookId)}> X</TradeDecline> </Trade>
                     </div>
                 })}
             <h2>Trade request for you</h2>
                 {this.props.books && this.props.books.map(book => {
-                    return <div>
-                        {book._requestedBy && <Trade key={book._id}><TradeInfo>{book.title}</TradeInfo><TradeDecline onClick={() => this.declineReq(book._id, book._requestedBy)}> X</TradeDecline><TradeConfirm>&#x2714;</TradeConfirm></Trade>}
+                    return book._requestedBy && <div key={book._id}>
+                        <Trade><TradeInfo>{book.title}</TradeInfo><TradeDecline onClick={() => this.rejectReq(book._id, book._requestedBy)}> X</TradeDecline><TradeConfirm><Link to={{ pathname:`/trade/${book._id}`}}>&#x2714;</Link></TradeConfirm></Trade>
                         </div>
                 })}
         </div>
