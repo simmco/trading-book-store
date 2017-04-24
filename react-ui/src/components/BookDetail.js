@@ -23,14 +23,14 @@ class BookDetail extends React.Component {
         <div>
             <Wrapper>
                 <Image style={{ 'backgroundImage': 'url('+ this.props.pic + ')'}}>
-                    {isOwner && <Delete onClick={this.deleteBook}>X</Delete>}
+                    {auth && isOwner && <Delete onClick={this.deleteBook}>X</Delete>}
                 </Image>
                 <Bottom>
                     <Book>
                         <BookTitle>{this.props.title.substring(0,20)}</BookTitle>
                         <BookAuthor>{this.props.authors}</BookAuthor>
                     </Book>
-                {!auth && !isOwner && !this.state.isRequested && <Button onClick={this.tradeRequest}>Trade</Button> }
+                {auth && !isOwner && !this.state.isRequested && <Button onClick={this.tradeRequest}>Trade</Button> }
                 </Bottom>
             </Wrapper>
         </div>
