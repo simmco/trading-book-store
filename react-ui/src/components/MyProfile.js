@@ -22,6 +22,7 @@ class MyProfile extends React.Component {
     this.props.updateProfileInfo(city, state);
   };
   render() {
+    console.log(this.props.user)
     return (
       <div>
         {this.props.user &&

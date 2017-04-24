@@ -18,6 +18,7 @@ class BookDetail extends React.Component {
     }
     render() {
         const isOwner = this.props._owner === localStorage.getItem('id') ? true : false
+        const auth = localStorage.getItem('id') ? true : false
     return (
         <div>
             <Wrapper>
@@ -29,7 +30,7 @@ class BookDetail extends React.Component {
                         <BookTitle>{this.props.title.substring(0,20)}</BookTitle>
                         <BookAuthor>{this.props.authors}</BookAuthor>
                     </Book>
-                {!isOwner && !this.state.isRequested && <Button onClick={this.tradeRequest}>Trade</Button> }
+                {!auth && !isOwner && !this.state.isRequested && <Button onClick={this.tradeRequest}>Trade</Button> }
                 </Bottom>
             </Wrapper>
         </div>

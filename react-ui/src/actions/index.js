@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { ADD_BOOK, AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_MESSAGE, GET_ALL_BOOKS, GET_MY_BOOKS, GET_REQ_BOOKS, DELETE_REQ, REJECT_REQ, DELETE_BOOK, GET_TRADE_INFO, GET_USER } from './types'
 
-// const ROOT_URL = 'https://lit-brook-10809.herokuapp.com/api'
-const ROOT_URL = 'http://localhost:5000/api'
+const ROOT_URL = 'https://lit-brook-10809.herokuapp.com/api'
+// const ROOT_URL = 'http://localhost:5000/api'
 
 export function signinUser(email, password) {
   return function(dispatch) {
