@@ -23,8 +23,8 @@ class BookTrade extends React.Component {
           <UserInfo>
             <h3>Info about trade request</h3>
             <p>email: <a href={`mailto:${user.email}`}>{user.email}</a></p>
-            {user.city && <p>email: </p>}
-            {user.state && <p>email: {user.state}</p>}
+            {user.city && <p>city: {user.city}</p>}
+            {user.state && <p>state: {user.state}</p>}
           </UserInfo>}
       </Wrapper>
     );
